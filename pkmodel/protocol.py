@@ -10,6 +10,24 @@ import os
 class Protocol:
     """A Pharmokinetic (PK) protocol"""
 
+def dose(t, X):
+    return X
+
+def rhs_ib_dose(t, y, Q_p1, V_c, V_p1, CL, X):
+    q_c, q_p1 = y
+    transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
+    dqc_dt = dose(t, X) - q_c / V_c * CL - transition
+    dqp1_dt = transition
+    return [dqc_dt, dqp1_dt]
+
+def rhs_s_dose(t, y, k_a, Q_p1, V_c, V_p1, CL, X):
+    q_0, q_c, q_p1 = y
+    transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
+    dq0_dt = dose(t,X) - k_a*q_0
+    dqc_dt = k_a*q_0 - (q_c/V_c)*CL - transition
+    dqp1_dt = transition
+    return [dq0_dt, dqc_dt, dqp1_dt] 
+
 def rhs(t, y, Q_p1, V_c, V_p1, CL, X):
     q_c, q_p1 = y
     transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
