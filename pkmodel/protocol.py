@@ -3,16 +3,12 @@ import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
 
-<<<<<<< HEAD
 import click
 import datetime
+import os
 
 class Protocol:
-    """A Pharmokinetic (PK) protocol
-=======
-def dose(t, X):
-    return X
->>>>>>> origin/dev
+    """A Pharmokinetic (PK) protocol"""
 
 def rhs(t, y, Q_p1, V_c, V_p1, CL, X):
     q_c, q_p1 = y
@@ -38,11 +34,11 @@ def solve(model1:Model, model2:Model):
         plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
         plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
 
-<<<<<<< HEAD
 
 path = os.getcwd()
-outdir = path.split("pkmodel")[0] + "/runs"
+outdir = path.split("pkmodel")[0] + "runs/"
 try: os.mkdir(outdir)
+except: pass
 
 @click.command()
 @click.option("--dev")
@@ -50,33 +46,23 @@ try: os.mkdir(outdir)
 @click.option("--model", default="intr", help="Choose either sub or intr for subcutaneous or intraveous respectively")
 def run_protocol(dev, out, model):
 
-    from pkmodel.utils import Stdout, Config
+    from utils import Stdout, Config
 
-    _date = datetime.date.today()
-    outpath = outdir + _date + len([name for name in os.listdir(outdir) if name.startswith(_date)])
+    _date = str(datetime.date.today())
+    outpath = outdir + _date + str(len([name for name in os.listdir(outdir) if name.startswith(_date)]))
 
     stdout = Stdout(outpath)
-    stdout.write("hello world")
+    stdout.write(f"model = {model}")
+    stdout.write(f"outpath = {outpath}")
 
     if dev != None:
         verbose = True
 
-    
-    
-
-
-
-
-
-=======
-    plt.legend()
-    plt.ylabel('drug mass [ng]')
-    plt.xlabel('time [h]')
-    plt.show()
-
 if __name__ == "__main__":
-    model1 =  Model('model1', 1.0, 1.0, 1.0, 1.0, 1.0,)
-    model2 =  Model('model2', 2.0, 1.0, 1.0, 1.0, 1.0,)
 
-    solve(model1=model1,model2=model2)
->>>>>>> origin/dev
+    run_protocol()
+
+
+
+
+
