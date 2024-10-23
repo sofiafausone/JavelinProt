@@ -50,8 +50,12 @@ class Config:
             for line in f:
                 if len(line.strip()) > 0:
 
+                    line = line.split("#")[0]
+
                     if line.startswith(" "):
-                        name, value = line.strip().split(": ")
+                        name, value = line.split(": ")
+                        if value in ("", " " "\t"):
+                            value = None
                         dict[section][name] = value
                 
                     else:
