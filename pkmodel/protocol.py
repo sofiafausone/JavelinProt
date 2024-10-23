@@ -1,17 +1,42 @@
-#
-# Protocol class
-#
+from model import Model
+import matplotlib.pylab as plt
+import numpy as np
+import scipy.integrate
 
-class Protocol:
-    """A Pharmokinetic (PK) protocol
+def dose(t, X):
+    return X
 
-    Parameters
-    ----------
+def rhs(t, y, Q_p1, V_c, V_p1, CL, X):
+    q_c, q_p1 = y
+    transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
+    dqc_dt = dose(t, X) - q_c / V_c * CL - transition
+    dqp1_dt = transition
+    return [dqc_dt, dqp1_dt]
 
-    value: numeric, optional
-        an example paramter
+def solve(model1:Model, model2:Model):
+    t_eval = np.linspace(0, 1, 1000)
+    y0 = np.array([0.0, 0.0])
 
-    """
-    def __init__(self, value=43):
-        self.value = value
+    fig = plt.figure()
+    for model in [model1, model2]:
+        args = [
+            model.Q_p1, model.V_c, model.V_p1, model.CL, model.X
+        ]
+        sol = scipy.integrate.solve_ivp(
+            fun=lambda t, y: rhs(t, y, *args),
+            t_span=[t_eval[0], t_eval[-1]],
+            y0=y0, t_eval=t_eval
+        )
+        plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
+        plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
 
+    plt.legend()
+    plt.ylabel('drug mass [ng]')
+    plt.xlabel('time [h]')
+    plt.show()
+
+if __name__ == "__main__":
+    model1 =  Model('model1', 1.0, 1.0, 1.0, 1.0, 1.0,)
+    model2 =  Model('model2', 2.0, 1.0, 1.0, 1.0, 1.0,)
+
+    solve(model1=model1,model2=model2)
