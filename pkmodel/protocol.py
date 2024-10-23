@@ -21,6 +21,7 @@ class Protocol:
 
 path = os.getcwd()
 outdir = path.split("pkmodel")[0] + "/runs"
+try: os.mkdir(outdir)
 
 @click.command()
 @click.option("--dev")
