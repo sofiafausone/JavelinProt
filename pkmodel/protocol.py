@@ -35,6 +35,51 @@ def solve(model1:Model, model2:Model):
     plt.xlabel('time [h]')
     plt.show()
 
+#solving just for central chamber quantity of drugs, returning quantity over time
+def solve_c(model1:Model, model2:Model):
+    t_eval = np.linspace(0, 1, 1000)
+    y0 = np.array([0.0, 0.0])
+
+    fig = plt.figure()
+    for model in [model1, model2]:
+        args = [
+            model.Q_p1, model.V_c, model.V_p1, model.CL, model.X
+        ]
+        sol = scipy.integrate.solve_ivp(
+            fun=lambda t, y: rhs(t, y, *args),
+            t_span=[t_eval[0], t_eval[-1]],
+            y0=y0, t_eval=t_eval
+        )
+        plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
+
+    plt.legend()
+    plt.ylabel('drug mass [ng]')
+    plt.xlabel('time [h]')
+    plt.show()
+
+
+#solving just for peripheral chamber quantity of drugs,
+def solve_p(model1:Model, model2:Model):
+    t_eval = np.linspace(0, 1, 1000)
+    y0 = np.array([0.0, 0.0])
+
+    fig = plt.figure()
+    for model in [model1, model2]:
+        args = [
+            model.Q_p1, model.V_c, model.V_p1, model.CL, model.X
+        ]
+        sol = scipy.integrate.solve_ivp(
+            fun=lambda t, y: rhs(t, y, *args),
+            t_span=[t_eval[0], t_eval[-1]],
+            y0=y0, t_eval=t_eval
+        )
+        plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
+
+    plt.legend()
+    plt.ylabel('drug mass [ng]')
+    plt.xlabel('time [h]')
+    plt.show()
+
 if __name__ == "__main__":
     model1 =  Model('model1', 1.0, 1.0, 1.0, 1.0, 1.0,)
     model2 =  Model('model2', 2.0, 1.0, 1.0, 1.0, 1.0,)
