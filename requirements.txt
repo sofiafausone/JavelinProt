@@ -3,5 +3,5 @@ pytest
 matplotlib
 click
 setuptools
-pkmodel
+pk-model
 unittest
