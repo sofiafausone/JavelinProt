@@ -10,15 +10,15 @@ Features:
 
 - Ability to solve for the drug quantity in each compartment over time, given a model and a protocol
 
-- Ability to visualise the solution of a model, and to compare two different solutions.
+- Ability to visualise the solution of a model, and to compare two different solutions. 
 
-- Put the 4 above into Command click 
+- Put the 4 above into YAML 
 
 - pip installable
 
 - github repository, with issues + PRs that fully document the development process
 
-- unit testing with a good test coverage
+- unit testing with a good test coverage #Sofia
 
 - fully documented, e.g. README, API documentation, OS license
 
