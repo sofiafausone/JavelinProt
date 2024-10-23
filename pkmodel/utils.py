@@ -2,6 +2,7 @@
 
 '''
 
+import os
 
 class Stdout:
 
@@ -53,17 +54,24 @@ class Config:
                     line = line.split("#")[0]
 
                     if line.startswith(" "):
-                        name, value = line.split(": ")
+                        name, value = line.split(":")
                         if value in ("", " " "\t"):
                             value = None
-                        dict[section][name] = value
+                        dict[section][name] = value.strip()
                 
                     else:
                         section = line.strip().rstrip(":")
+                        dict[section] = {}
            
                 else:
                     continue
 
-    self.dict = dict
+        self.dict = dict
     
-    return dict
+        return dict
+
+path = os.getcwd()
+file = path.split("pkmodel")[0] + "config.yaml"
+
+settings = Config("c1").read_yaml(file)
+print(settings)
