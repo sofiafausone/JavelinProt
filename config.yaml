@@ -1,0 +1,11 @@
+General:
+ model: 		# (str) subcutaneous or intravenous
+ peripherals:           # (int) number of peripheral compartments
+
+Protocol:
+ doses:			# (int) number of doses administered
+ times:			# (list) of administration times comma delimited
+
+Output:
+ visualise: 		# (bool) whether to visualise the output as a plot
+ verbose:		# (bool) whether to stream outputs in verbose mode
