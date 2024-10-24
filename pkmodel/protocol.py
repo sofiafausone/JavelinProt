@@ -1,4 +1,4 @@
-from model import Model
+#from pkmodel.model import Model
 import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
@@ -6,6 +6,7 @@ import scipy.integrate
 import click
 import datetime
 import os
+
 
 class Protocol:
     """A Pharmokinetic (PK) protocol"""
