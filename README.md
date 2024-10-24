@@ -1,8 +1,13 @@
 # 2020-software-engineering-projects-pk
 starter pk modelling repository
 
-Checklist: 
-Status update Thurs morning: 
+Checklist:
+#Status update Thurs afternoon: 
+- We are implementing the system of classes for different model types. 
+- Discussed different methods of dosing (ie linear incrimental) and implemented that 
+(while keeping default single dose option)
+ 
+#Status update Thurs morning: 
 - We discussed the best structure to have protocol separate from the model(with 1 
 compartment and 2 compartment models separate), and to 
 separate/specify the types of dosing (sub and ib). After trying out a few ideas, we are 
