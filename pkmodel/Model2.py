@@ -1,5 +1,6 @@
 
 
+
 class Model:
 
     def __init__(self, ka):
@@ -64,5 +65,5 @@ class subc(model):
         self.sub_rhs()
 
 
-intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
-subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+#intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+#subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)

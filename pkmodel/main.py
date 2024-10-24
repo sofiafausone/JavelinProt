@@ -12,6 +12,14 @@ except: pass
 @click.option("--out", default=outdir, help="Provide an alternative output directory by specifying path from root")
 @click.option("--dose", default="intr", help="Choose either sub or intr for subcutaneous or intraveous respectively")
 @click.option("--rate", "-k", default=1, help="Set the absorption rate (Ka)")
+
+
+
+
+
+
+
+
 def run_protocol(dev, out, dose, rate):
 
     from utils import Stdout, Config
