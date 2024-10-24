@@ -12,7 +12,7 @@ class Stdout:
 
     def __init__(self, file):
 
-        self.file = file
+        self.file = file + "/stdout.txt"
 
     def write(self, msg):
 
@@ -21,7 +21,7 @@ class Stdout:
         '''
 
         with open (self.file, 'a') as f:
-            f.write(msg)
+            f.write(f"{msg}\n")
 
         print(msg)
 
