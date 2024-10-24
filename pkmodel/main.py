@@ -38,6 +38,9 @@ def run_protocol(dev, out, model, rate, num, yaml):
     except: pass
 
     # establish the .yaml config file path
+    if yaml not in (None, "", " "):
+        yaml_path = yaml
+    else: yaml_path = os.getcwd().split("pkmodel")[0] + config.yaml
     if yaml_path in (None, "" " "):
         yaml_path = cdir + "config.yaml"
     else: yaml_path = yaml_path
