@@ -8,9 +8,6 @@ import datetime
 import os
 
 
-class Protocol:
-    """A Pharmokinetic (PK) protocol"""
-
 def dose(t, X):
     return X
 
@@ -65,29 +62,6 @@ def solve(model1:Model, model2:Model):
         plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
         plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
 
-
-path = os.getcwd()
-outdir = path.split("pkmodel")[0] + "runs/"
-try: os.mkdir(outdir)
-except: pass
-
-@click.command()
-@click.option("--dev")
-@click.option("--out", default=outdir, help="Provide an alternative output directory by specifying path from root")
-@click.option("--model", default="intr", help="Choose either sub or intr for subcutaneous or intraveous respectively")
-def run_protocol(dev, out, model):
-
-    from utils import Stdout, Config
-
-    _date = str(datetime.date.today())
-    outpath = outdir + _date + str(len([name for name in os.listdir(outdir) if name.startswith(_date)]))
-
-    stdout = Stdout(outpath)
-    stdout.write(f"model = {model}")
-    stdout.write(f"outpath = {outpath}")
-
-    if dev != None:
-        verbose = True
 
 #solving just for central chamber quantity of drugs, returning quantity over time
 def solve_c(model1:Model, model2:Model):
