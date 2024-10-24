@@ -40,7 +40,7 @@ def run_protocol(dev, out, model, rate, num, yaml):
     # establish the .yaml config file path
     if yaml not in (None, "", " "):
         yaml_path = yaml
-    else: yaml_path = os.getcwd().split("pkmodel")[0] + config.yaml
+    else: yaml_path = os.getcwd().split("pkmodel")[0] + "config.yaml"
     if yaml_path in (None, "" " "):
         yaml_path = cdir + "config.yaml"
     else: yaml_path = yaml_path
@@ -60,13 +60,13 @@ def run_protocol(dev, out, model, rate, num, yaml):
     # ---
 
     # import and create model class instance for either model type
-    import Model
-    if model in ("Intr", "INTR", "intr"):
-        M = intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
-    elif model in ("Sub", "sub", "SUB"):
-        M = subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+    #import Model
+    #if model in ("Intr", "INTR", "intr"):
+    #    M = intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+    #elif model in ("Sub", "sub", "SUB"):
+    #    M = subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
 
-    solve()
+    #solve()
 
 
 if __name__ == "__main__":
