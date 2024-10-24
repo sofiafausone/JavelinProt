@@ -27,7 +27,7 @@ def rhs_s_dose(t, y, k_a, Q_p1, V_c, V_p1, CL, X):
     dqp1_dt = transition
     return [dq0_dt, dqc_dt, dqp1_dt] 
 
-
+#sub_bool is the boolean that says to use subcutaneous dosing (not intravenus bolus dosing)
 def rhs(t, y, k_a, Q_p1, V_c, V_p1, CL, X, sub_bool):
 
     q_c, q_p1 = y

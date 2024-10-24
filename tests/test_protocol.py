@@ -1,6 +1,16 @@
-import unittest
-import pkmodel as pk
 
+#%%
+import unittest
+#import pkmodel as pk
+import numpy as np
+import numpy.testing as npt
+import matplotlib.pyplot as plt
+
+
+
+#%%
+
+import pytest
 
 class ProtocolTest(unittest.TestCase):
     """
@@ -12,4 +22,5 @@ class ProtocolTest(unittest.TestCase):
         """
         model = pk.Protocol()
         self.assertEqual(model.value, 43)
+
 
