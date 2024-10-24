@@ -1,6 +1,12 @@
 #
-# Solution class
-#
+# example of how to run 
+
+
+
+
+
+
+
 
 class Solution:
     """A Pharmokinetic (PK) model solution
