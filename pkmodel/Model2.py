@@ -24,6 +24,9 @@ class Model:
 
         self.ka = ka
 
+        self.times
+        self.exponent
+
 
     def set_dose(self, t, X, times=(0), exponent=0):
 
@@ -36,14 +39,15 @@ class Model:
 
         elif exponent == 1: # gradient dosing = incrementally increase over linear scale
             tri_func = lambda n: (n*(n+1))/2
-            return (X/tri_func(np.max(times))) * times
+            values = (X/tri_func(np.max(times))) * np.float64(times)
+            return values[t]
 
 
     def int_rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
         
         q_c, q_p1 = y
         transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-        dqc_dt = dose(t, X) - q_c / V_c * CL - transition
+        dqc_dt = self.dose(t, X, self.times, self.exponent) - q_c / V_c * CL - transition
         dqp1_dt = transition
     
         return [dqc_dt, dqp1_dt]
@@ -68,6 +72,9 @@ class intr(Model):
 
         super().__init__()
 
+        self.times 
+        self.exponent
+
         self.ib_rhs()
 
 
@@ -79,8 +86,7 @@ class subc(Model):
 
         super().__init__()
 
+        self.times 
+        self.exponent
+
         self.sub_rhs()
-
-
-#intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
-#subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
