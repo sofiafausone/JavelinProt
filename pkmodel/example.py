@@ -1,7 +1,7 @@
 #
-# Solution class OLD
-#
-#trying to solve for drug quantity in each compartment over time
+# example of how to run 
+
+
 
 
 
