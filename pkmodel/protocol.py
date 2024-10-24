@@ -28,12 +28,19 @@ def rhs_s_dose(t, y, k_a, Q_p1, V_c, V_p1, CL, X):
     dqp1_dt = transition
     return [dq0_dt, dqc_dt, dqp1_dt] 
 
-def rhs(t, y, Q_p1, V_c, V_p1, CL, X):
+def rhs(t, y, k_a, Q_p1, V_c, V_p1, CL, X, sub_bool):
     q_c, q_p1 = y
     transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-    dqc_dt = dose(t, X) - q_c / V_c * CL - transition
     dqp1_dt = transition
-    return [dqc_dt, dqp1_dt]
+    if sub_bool: #if subcutaneous dose
+        q_0, q_c, q_p1 = y
+        dq0_dt = dose(t,X) - k_a*q_0
+        dqc_dt = k_a*q_0 - (q_c/V_c)*CL - transition
+        return [dq0_dt, dqc_dt, dqp1_dt] 
+    
+    else:
+        dqc_dt = dose(t, X) - q_c / V_c * CL - transition
+        return [dqc_dt, dqp1_dt]
 
 def solve(model1:Model, model2:Model):
     t_eval = np.linspace(0, 1, 1000)
