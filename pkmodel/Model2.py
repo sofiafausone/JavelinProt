@@ -1,4 +1,22 @@
+import numpy as np
 
+
+def set_dose(X, t, times=(0), exponent=0):
+
+    '''
+        
+    '''
+        
+    if exponent == 0: # flat dosing = split dose equally over time points
+        return X/len(times)
+
+    elif exponent == 1: # gradient dosing = incrementally increase over linear scale
+        tri_func = lambda n: (n*(n+1))/2
+        values = (X/tri_func(np.max(times))) * np.float64(times)
+        return values[t]
+
+print(set_dose(10, 3, times=(1,2,3,4,5), exponent=1))
+        
 
 class Model:
 
@@ -16,7 +34,7 @@ class Model:
         if exponent == 0: # flat dosing = split dose equally over time points
             return X/len(times)
 
-        elif func == 1: # gradient dosing = incrementally increase over linear scale
+        elif exponent == 1: # gradient dosing = incrementally increase over linear scale
             tri_func = lambda n: (n*(n+1))/2
             return (X/tri_func(np.max(times))) * times
 
@@ -42,7 +60,7 @@ class Model:
         return [dq0_dt, dqc_dt, dqp1_dt] 
 
 
-class intr(model):
+class intr(Model):
 
     dosing = "intr"
 
@@ -53,7 +71,7 @@ class intr(model):
         self.ib_rhs()
 
 
-class subc(model):
+class subc(Model):
 
     dosing = "subc"
 
@@ -64,5 +82,5 @@ class subc(model):
         self.sub_rhs()
 
 
-intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
-subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+#intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+#subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
