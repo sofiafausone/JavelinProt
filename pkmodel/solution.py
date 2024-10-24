@@ -1,6 +1,12 @@
 #
-# Solution class
+# Solution class OLD
 #
+#trying to solve for drug quantity in each compartment over time
+
+
+
+
+
 
 class Solution:
     """A Pharmokinetic (PK) model solution

@@ -1,4 +1,4 @@
-#from pkmodel.model import Model
+from pkmodel.model import Model
 import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
@@ -21,6 +21,7 @@ def rhs_ib_dose(t, y, Q_p1, V_c, V_p1, CL, X):
     dqp1_dt = transition
     return [dqc_dt, dqp1_dt]
 
+
 def rhs_s_dose(t, y, k_a, Q_p1, V_c, V_p1, CL, X):
     q_0, q_c, q_p1 = y
     transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
@@ -29,10 +30,13 @@ def rhs_s_dose(t, y, k_a, Q_p1, V_c, V_p1, CL, X):
     dqp1_dt = transition
     return [dq0_dt, dqc_dt, dqp1_dt] 
 
+
 def rhs(t, y, k_a, Q_p1, V_c, V_p1, CL, X, sub_bool):
+
     q_c, q_p1 = y
     transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
     dqp1_dt = transition
+
     if sub_bool: #if subcutaneous dose
         q_0, q_c, q_p1 = y
         dq0_dt = dose(t,X) - k_a*q_0
@@ -43,6 +47,7 @@ def rhs(t, y, k_a, Q_p1, V_c, V_p1, CL, X, sub_bool):
         dqc_dt = dose(t, X) - q_c / V_c * CL - transition
         return [dqc_dt, dqp1_dt]
 
+
 def solve(model1:Model, model2:Model):
     t_eval = np.linspace(0, 1, 1000)
     y0 = np.array([0.0, 0.0])
@@ -50,7 +55,7 @@ def solve(model1:Model, model2:Model):
     fig = plt.figure()
     for model in [model1, model2]:
         args = [
-            model.Q_p1, model.V_c, model.V_p1, model.CL, model.X
+            model.Q_p1, model.V_c, model.V_p1, model.CL, model.X, model.sub_bool
         ]
         sol = scipy.integrate.solve_ivp(
             fun=lambda t, y: rhs(t, y, *args),
