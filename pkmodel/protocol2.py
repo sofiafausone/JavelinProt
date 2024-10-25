@@ -42,19 +42,20 @@ def solve(X, settings):
         model = Model2.Intr(t_eval, settings)
 
     args = [
-        model.Q_p1, model.V_c, model.V_p1, model.CL, X, sub_bool
+        model.Q_p1, model.V_c, model.V_p1, model.CL, X
     ]
     sol = scipy.integrate.solve_ivp(
         fun=lambda t, y: model.rhs(t, y, *args),
         t_span=[t_eval[0], t_eval[-1]],
        y0=y0, t_eval=t_eval
     )
+    print(sol)
     plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
     plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
 
 
 args = {
-    "model": "int",
+    "model": False,
     "compartments": 2,
     "rate": 1.0,
     "doseX": 1.0,

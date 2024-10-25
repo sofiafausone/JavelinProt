@@ -44,22 +44,18 @@ def lin_gradient(X, times):
 
 class Intr(Model):
 
-    dosing = "intr"
+    name = "intreveneous"
     
     def __init__(self, times, settings):
 
         super().__init__(times, settings)
-
-        self.times 
-        self.exponent
-
-        self.ib_rhs()
+    
 
     def rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
         
         q_c, q_p1 = y
         transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-        dqc_dt = self.dose(t, X, self.times, self.exponent) - q_c / V_c * CL - transition
+        dqc_dt = self.set_dose(t, X, self.times, self.exponent) - q_c / V_c * CL - transition
         dqp1_dt = transition
     
         return [dqc_dt, dqp1_dt]
@@ -67,20 +63,18 @@ class Intr(Model):
 
 class Subc(Model):
 
-    dosing = "subc"
+    name = "subcutaneous"
 
     def __init__(self, times, settings):
 
         super().__init__(times, settings)
 
-        self.times 
-        self.exponent
 
     def rhs(self, t, y, k_a, Q_p1, V_c, V_p1, CL, X):
         
         q_0, q_c, q_p1 = y
         transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-        dq0_dt = self.dose(t,X) - k_a*q_0
+        dq0_dt = self.set_dose(t,X) - k_a*q_0
         dqc_dt = k_a*q_0 - (q_c/V_c)*CL - transition
         dqp1_dt = transition
     
