@@ -47,11 +47,12 @@ def solve(X, settings):
     sol = scipy.integrate.solve_ivp(
         fun=lambda t, y: model.rhs(t, y, *args),
         t_span=[t_eval[0], t_eval[-1]],
-       y0=y0, t_eval=t_eval
+        y0=y0, t_eval=t_eval
     )
     print(sol)
     plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
     plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
+    plt.show()
 
 
 args = {
@@ -60,7 +61,7 @@ args = {
     "rate": 1.0,
     "doseX": 1.0,
     #"times": np.linspace(0, 1, 1000),
-    "scale": 0,
+    "scale": 1,
     "V_c": 1.0,
     "V_p1": 1.0,
     "CL": 1.0,

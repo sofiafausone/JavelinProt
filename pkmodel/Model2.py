@@ -10,7 +10,6 @@ class Model:
 
         self.V_c, self.V_p1, self.CL, self.Q_p1 = list(settings["Parameters"].values())
 
-
     def set_dose(self, t, X, times=(0), exponent=0):
 
         '''
@@ -21,8 +20,7 @@ class Model:
             return X/len(times)
 
         elif exponent == 1: # gradient dosing = incrementally increase over linear scale
-            return lin_gradient(X, times)[t]
-
+            return lin_gradient(X, times)[int(t)]
 
     def int_rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
         
