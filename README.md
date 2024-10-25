@@ -1,7 +1,15 @@
 # 2020-software-engineering-projects-pk
 starter pk modelling repository
 
-Checklist:
+#Status update Friday:
+- We finished the protocol.py and main.py files so that you can run 
+protocols with input parameters from the config yaml file, or from the 
+command line.
+- We completed some unit test (unit testing for the rhs function in the 
+model class does not work yet) and attempted to use codecov, but since 
+some tests do not work, this would be a future step 
+
+
 #Status update Thurs afternoon: 
 - We are implementing the system of classes for different model types. 
 - Discussed different methods of dosing (ie linear incrimental) and implemented that 
@@ -22,7 +30,8 @@ Features:
 
 - Users can specify the protocol independently from the model (e.g. be able to solve a one and two compartment model for the same dosing protocol) #Hew
 
-- Ability to solve for the drug quantity in each compartment over time, given a model and a protocol #Kingsley
+- Ability to solve for the drug quantity in each compartment over time, 
+given a model and a protocol #Sofia
 
 - Ability to visualise the solution of a model, and to compare two different solutions. #Kingsley
 
@@ -32,7 +41,7 @@ Features:
 
 - github repository, with issues + PRs that fully document the development process
 
-- unit testing with a good test coverage #Sofia
+- unit testing with a good test coverage
 
 - fully documented, e.g. README, API documentation, OS license
 
