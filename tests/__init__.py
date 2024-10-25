@@ -11,3 +11,7 @@
 # for an extended discussion.
 #
 
+#from test_model import *
+#from test_protocol import *
+#from test_solution import *
+#from test_utils import *
