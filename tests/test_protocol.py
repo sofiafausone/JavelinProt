@@ -5,13 +5,18 @@ import unittest
 import numpy as np
 import numpy.testing as npt
 import matplotlib.pyplot as plt
+import pytest
 
 
 
 #%%
 
-import pytest
 
+
+
+
+
+#%%
 class ProtocolTest(unittest.TestCase):
     """
     Tests the :class:`Protocol` class.
