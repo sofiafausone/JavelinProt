@@ -1,7 +1,15 @@
 # 2020-software-engineering-projects-pk
 starter pk modelling repository
 
-Checklist:
+#Status update Friday:
+- We finished the protocol.py and main.py files so that you can run 
+protocols with input parameters from the config yaml file, or from the 
+command line.
+- We completed some unit test (unit testing for the rhs function in the 
+model class does not work yet) and attempted to use codecov, but since 
+some tests do not work, this would be a future step 
+
+
 #Status update Thurs afternoon: 
 - We are implementing the system of classes for different model types. 
 - Discussed different methods of dosing (ie linear incrimental) and implemented that 

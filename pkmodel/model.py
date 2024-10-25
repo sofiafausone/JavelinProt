@@ -22,15 +22,6 @@ class Model:
         elif exponent == 1: # gradient dosing = incrementally increase over linear scale
             return lin_gradient(X, times)[int(t)]
 
-    def int_rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
-        
-        q_c, q_p1 = y
-        transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-        dqc_dt = self.dose(t, X, self.times, self.exponent) - q_c / V_c * CL - transition
-        dqp1_dt = transition
-    
-        return [dqc_dt, dqp1_dt]
-
 
 def lin_gradient(X, times):
 
@@ -50,17 +41,33 @@ class Intr(Model):
     
 
     def rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
+        """Function right hand side for the intravenus bolus dosing method. 
+
+        Args
+        ---
+            t: time series
+            y: left hand side of the equation
+            V_c: (float)(mL) volume of central compartment
+            V_p1: (float)(mL) volume of peripheral compartment 1
+            CL: (float)(mL/h) clearance/elimination rate from central compartment
+            Q_p1:  (float)(mL/h) transition rate between central and peripheral 1
         
+        Returns
+        ---
+            dqc_dt: change in central drug quantity over time
+            dqp1_dt: changing in peripheral drug quantity over time
+        """
         q_c, q_p1 = y
         transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
         dqc_dt = self.set_dose(t, X, self.times, self.exponent) - q_c / V_c * CL - transition
         dqp1_dt = transition
-    
+
+
         return [dqc_dt, dqp1_dt]
 
 
 class Subc(Model):
-
+    
     name = "subcutaneous"
 
     def __init__(self, times, settings):
@@ -69,7 +76,24 @@ class Subc(Model):
 
 
     def rhs(self, t, y, k_a, Q_p1, V_c, V_p1, CL, X):
+        """Function right hand side for the subcutaneous dosing method. 
+
+        Args
+        ---
+            t: time series
+            y: left hand side of the equation
+            V_c: (float)(mL) volume of central compartment
+            V_p1: (float)(mL) volume of peripheral compartment 1
+            CL: (float)(mL/h) clearance/elimination rate from central compartment
+            Q_p1:  (float)(mL/h) transition rate between central and peripheral 1
+            * note: value k_a is the absorption rate for subcutaneous dosing method, passed in command line or yaml
         
+        Returns
+        ---
+            dqc_dt: change in central drug quantity over time
+            dqp1_dt: changing in peripheral drug quantity over time
+        """
+         
         q_0, q_c, q_p1 = y
         transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
         dq0_dt = self.set_dose(t,X) - k_a*q_0
