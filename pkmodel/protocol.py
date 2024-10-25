@@ -58,7 +58,7 @@ def solve(X, settings):
 
 
 args = {
-    "model": True,  #Sets model to subcutaenous, here is a Bug
+    "model": False,  #Sets model to subcutaenous, here is a Bug
     "compartments": 2,
     "rate": 2.0,
     "doseX": 10.0,
@@ -70,4 +70,4 @@ args = {
     "Q_p1": 2.0
 }
 
-run(**args)
+#run(**args)
