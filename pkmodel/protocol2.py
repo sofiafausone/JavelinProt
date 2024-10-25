@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy
 
 
 def run(**kwargs):
@@ -9,9 +10,7 @@ def run(**kwargs):
         settings = {"General":{},"Protocol":{},"Output":{},"Parameters":{}}
 
         for x in kwargs:
-            print(x)
             if x in ("model", "compartments", "rate", "doseX"):
-                print(settings)
                 settings["General"][x] = args[x]
             elif x in ("times", "scale"):
                 settings["Protocol"][x] = args[x]
@@ -29,7 +28,7 @@ def run(**kwargs):
 
 def solve(X, settings):
 
-    
+    import Model2
 
     t_eval = np.linspace(0, 1, 1000)
     y0 = np.array([0.0, 0.0])
@@ -38,12 +37,12 @@ def solve(X, settings):
 
     fig = plt.figure()
     if sub_bool == True:
-        model = subc(ka, settings["Parameters"])
+        model = Model2.Subc(t_eval, settings)
     else:
-        model = intr(ka, settings["Parameters"])
+        model = Model2.Intr(t_eval, settings)
 
     args = [
-        model.Q_p1, model.V_c, model.V_p1, model.CL, X, model.sub_bool
+        model.Q_p1, model.V_c, model.V_p1, model.CL, X, sub_bool
     ]
     sol = scipy.integrate.solve_ivp(
         fun=lambda t, y: model.rhs(t, y, *args),

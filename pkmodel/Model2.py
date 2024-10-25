@@ -2,14 +2,13 @@ import numpy as np
 
 class Model:
 
-    def __init__(self, ka, **args):
+    def __init__(self, times, settings):
 
-        self.ka = ka
+        self.ka = settings["General"]["rate"]
+        self.times = times
+        self.exponent = settings["Protocol"]["scale"]
 
-        self.times
-        self.exponent
-
-        self.V_c, self.V_p1, self.CL, self.Q_p1 = args
+        self.V_c, self.V_p1, self.CL, self.Q_p1 = list(settings["Parameters"].values())
 
 
     def set_dose(self, t, X, times=(0), exponent=0):
@@ -43,13 +42,13 @@ def lin_gradient(X, times):
     return values
 
 
-class intr(Model):
+class Intr(Model):
 
     dosing = "intr"
+    
+    def __init__(self, times, settings):
 
-    def __init__(self):
-
-        super().__init__()
+        super().__init__(times, settings)
 
         self.times 
         self.exponent
@@ -66,13 +65,13 @@ class intr(Model):
         return [dqc_dt, dqp1_dt]
 
 
-class subc(Model):
+class Subc(Model):
 
     dosing = "subc"
 
-    def __init__(self):
+    def __init__(self, times, settings):
 
-        super().__init__()
+        super().__init__(times, settings)
 
         self.times 
         self.exponent

@@ -9,6 +9,8 @@ from .version_info import VERSION_INT, VERSION  # noqa
 
 # Import main classes
 from .model import Model    # noqa
+from .Model2 import *
+from .protocol2 import *
 from .protocol import Protocol    # noqa
 from .example import Solution     # noqa
 from .utils import *
