@@ -1,7 +1,8 @@
 General:
  model: 		# (str) subcutaneous or intravenous
  compartments:          # (int) number of peripheral compartments
- rate:		    	# (float) the absorption rate constant (ka)
+ rate:		    	# (float)(/h) the absorption rate constant (ka)
+ doseX:			# (float)(mg) the dose quantity administered (X)
 
 Protocol:
  dosing:	        # (float) total dosage administered
@@ -11,3 +12,11 @@ Protocol:
 Output:
  visualise: 		# (bool) whether to visualise the output as a plot
  verbose:		# (bool) whether to stream outputs in verbose mode
+
+Parameters:
+ V_c:			# (float)(mL) volume of central compartment
+ V_p1: 			# (float)(mL) volume of peripheral compartment 1
+ CL:			# (float)(mL/h) clearance/elimination rate from central compartment
+ Q_p1:			# (float)(mL/h) transition rate between central and peripheral 1
+ 
+ 

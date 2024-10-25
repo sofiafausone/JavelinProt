@@ -1,16 +1,67 @@
+import numpy as np
+import matplotlib.pyplot as plt
 
 
-def run():
+def run(**kwargs):
+    
+    args = kwargs.get("settings")
+    if args in ({}, None, ""):
+        settings = {"General":None,"Protocol":None,"Output":None,"Parameters":None}
+        #settings = {}
+        for x in args:
+            if x in ("model", "compartments", "rate", "doseX"):
+                settings["General"][x] = args[x]
+            elif x in ("times", "scale"):
+                settings["Protocol"][x] = args[x]
+            elif x in ("V_c", "V_p1", "CL", "Q_p1"):
+                settings["Parameters"][x] = args[x]
+            else:
+                raise Exception(f"Arg not in settings {args[x]}")
 
-    # 1. handle inputs - determine model call and dosage
+    else:
+        settings = args
 
-    # 2. call model
+    X = settings["General"]["doseX"]
 
-    # 3. dose
+    solve(X, settings)
 
-    # 4. solve
 
-    # 5. output
+def solve(X, settings):
 
-    intr(ka)
-    subc(ka)
+    t_eval = np.linspace(0, 1, 1000)
+    y0 = np.array([0.0, 0.0])
+
+    sub_bool = bool(settings["General"]["Model"])
+
+    fig = plt.figure()
+    if sub_bool == True:
+        model = subc(ka, settings["Parameters"])
+    else:
+        model = intr(ka, settings["Parameters"])
+
+    args = [
+        model.Q_p1, model.V_c, model.V_p1, model.CL, X, model.sub_bool
+    ]
+    sol = scipy.integrate.solve_ivp(
+        fun=lambda t, y: model.rhs(t, y, *args),
+        t_span=[t_eval[0], t_eval[-1]],
+       y0=y0, t_eval=t_eval
+    )
+    plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
+    plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
+
+
+args = {
+    "model": "int",
+    "compartments": 2,
+    "rate": 1.0,
+    "doseX": 1.0,
+    #"times": np.linspace(0, 1, 1000),
+    "scale": 0,
+    "V_c": 1.0,
+    "V_p1": 1.0,
+    "CL": 1.0,
+    "Q_p1": 1.0
+}
+
+run(settings=args)
