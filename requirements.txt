@@ -4,3 +4,4 @@ matplotlib
 click
 setuptools
 scipy
+pytest-cov
