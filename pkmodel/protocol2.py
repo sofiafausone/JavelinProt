@@ -1,3 +1,5 @@
+#%%
+
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy
@@ -47,7 +49,7 @@ def solve(X, settings):
     sol = scipy.integrate.solve_ivp(
         fun=lambda t, y: model.rhs(t, y, *args),
         t_span=[t_eval[0], t_eval[-1]],
-       y0=y0, t_eval=t_eval
+        y0=y0, t_eval=t_eval
     )
     print(sol)
     plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
@@ -55,16 +57,18 @@ def solve(X, settings):
 
 
 args = {
-    "model": False,
+    "model": True,  #Sets model to subcutaenous, here is a Bug
     "compartments": 2,
-    "rate": 1.0,
-    "doseX": 1.0,
+    "rate": 2.0,
+    "doseX": 10.0,
     #"times": np.linspace(0, 1, 1000),
     "scale": 0,
-    "V_c": 1.0,
+    "V_c": 5.0,
     "V_p1": 1.0,
-    "CL": 1.0,
-    "Q_p1": 1.0
+    "CL": 10.0,
+    "Q_p1": 2.0
 }
 
 run(**args)
+
+#%%
