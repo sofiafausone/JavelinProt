@@ -1,10 +1,12 @@
+'''
+
+'''
+
+
 import click
 import datetime
 import os
-
-'''
-
-'''
+from utils import Stdout, Config
 
 @click.command()
 @click.option("--dev", default=None)
@@ -18,8 +20,6 @@ def run_protocol(dev, out, model, rate, num, yaml):
     '''
     
     '''
-
-    from utils import Stdout, Config
 
     params = {"model":model, "rate":rate, "compartments":num} # set dictionary of click command arguments to later override .yaml config file parameters
 
@@ -46,27 +46,25 @@ def run_protocol(dev, out, model, rate, num, yaml):
     else: yaml_path = yaml_path
 
     # read the yaml config file as a nested dictionary
-    settings = Config("c1").read_yaml(yaml_path)
+    _settings = Config("c1").read_yaml(yaml_path)
     
     # .yaml config settings are overriden by the click command line arguments
     for p in params:
         if p not in (None, "", " "):
-            settings["General"][p] = params[p]
+            _settings["General"][p] = params[p]
 
-    if dev != None:
-        verbose = True
+    #if dev != None:
+    #    verbose = True
 
-    # Run
-    # ---
+    if click.confirm("Would you like to enter model parameters?\n Note if No then will read from config.yaml"):
+        click.prompt("Central compartment volume (V_c)", default=1.0)
+        click.prompt("Peripheral compartment volume (V_p1)", default=1.0)
+        click.prompt("Clearance/elimination rate from central compartment (CL))", default=1.0)
+        click.prompt("Transition rate between comparments (Q_p1)", default=1.0)
 
-    # import and create model class instance for either model type
-    #import Model
-    #if model in ("Intr", "INTR", "intr"):
-    #    M = intr(t, y, ka, Q_p1, V_c, V_p1, CL, X)
-    #elif model in ("Sub", "sub", "SUB"):
-    #    M = subc(t, y, ka, Q_p1, V_c, V_p1, CL, X)
+    from protocol import run
 
-    #solve()
+    run(settings=_settings, outpath=outpath)
 
 
 if __name__ == "__main__":

@@ -18,22 +18,13 @@ import numpy.testing as npt
 #        self.assertEqual(model.value, 42)
 
 
-def lin_gradient(X, time):
-
-    times = range(1, time+1)
-    tri_func = lambda n: (n*(n+1))/2
-    values = (X/tri_func(np.max(times))) * np.float64(times)
-
-    return values
-
-
 def test_lin_gradient():
 
     #from Model2 import lin_gradient
     for X in (1, 12, 100):
-        for time in (1, 3, 8):
+        for time in (1, 3, 8, 1000):
 
-            y = lin_gradient(X, time)
+            y = lin_gradient(X, range(1, time+1))
 
             assert len(y) == len(range(1, time+1))
             assert round(np.sum(y)) == X

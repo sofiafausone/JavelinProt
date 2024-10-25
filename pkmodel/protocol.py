@@ -1,12 +1,27 @@
-#%%
+'''
+Central runtime protocol takes parameters either from CLI or read in .yaml from main or
+from user script (if using as a package) and triggers solver function which establishes
+model as class objects and uses scipy's solve function
+'''
+
 
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy
+from utils import Stdout, Config
+import os
+import datetime
 
 
 def run(**kwargs):
+
+    '''
     
+    '''
+
+    outpath = kwargs.get("outpath", "C:/JavelinProt/Runs")
+    stdout = Stdout(outpath)
+
     _settings = kwargs.get("settings", None)
     if _settings in ({}, None, ""):
         settings = {"General":{},"Protocol":{},"Output":{},"Parameters":{}}
@@ -21,18 +36,30 @@ def run(**kwargs):
             else:
                 raise Exception(f"Arg not in settings {args[x]}")
     else:
-        settings = args
+        settings = _settings
     
+    stdout.write(f"Using settings:\n {settings}")
+
     X = settings["General"]["doseX"]
 
-    solve(X, settings)
+    solve(X, settings, outpath)
 
 
-def solve(X, settings):
+def solve(X, settings, outpath):
+
+    '''
+    
+    '''
 
     import pkmodel.model as model
 
-    t_eval = np.linspace(0, 1, 1000)
+    stdout = Stdout(outpath)
+
+    if isinstance(settings["Protocol"]["times"], list):
+        t_eval = settings["Protocol"]["times"]
+    else:
+        t_eval = range(1, int(settings["Protocol"]["times"])+1)
+    #t_eval = np.linspace(0, 1, 1000)
     y0 = np.array([0.0, 0.0])
 
     sub_bool = bool(settings["General"]["model"])
@@ -51,26 +78,8 @@ def solve(X, settings):
         t_span=[t_eval[0], t_eval[-1]],
         y0=y0, t_eval=t_eval
     )
-    print(sol)
+    
+    stdout.write(f"Solution: {sol}")
+
     plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
     plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
-    plt.show()
-
-
-args = {
-    "model": False,  #Sets model to subcutaenous, here is a Bug
-    "compartments": 2,
-    "rate": 1.0,
-    "doseX": 1.0,
-    #"times": np.linspace(0, 1, 1000),
-    "scale": 0,
-    "V_c": 1.0,
-    "V_p1": 1.0,
-    "CL": 1.0,
-    "Q_p1": 1.0
-}
-
-run(**args)
-
-# %%
-

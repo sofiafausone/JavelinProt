@@ -49,6 +49,10 @@ class Model:
         X: (float) initial quantity of drug being administered
         times: (1d array) of dose time intervals
         exponent: (int) determines whether to use a flat dosage distribution or a linear gradient increase
+
+        Returns
+        -------
+        (float) dosage value for given time point
         '''
         
         if exponent == 0: # flat dosing = split dose equally over time points
@@ -65,8 +69,14 @@ def lin_gradient(X, times):
     for a given dose quantity over a number of ime intervals which increases in a linear fashion
     with each time point.
 
+    Args
+    ----
     X: (float) initial quantity of drug being administered
     times: (1d array) of dose time intervals
+
+    Returns
+    -------
+    values: (1d array) of gradient adjusted values for each time interval
     '''
 
     tri_func = lambda n: (n*(n+1))/2
@@ -83,9 +93,7 @@ class Intr(Model):
 
     Args
     ----
-
-    Returns
-    -------
+    Model: (class) parent class to inherit from
     '''
 
     name = "intreveneous"
@@ -112,7 +120,12 @@ class Intr(Model):
 class Subc(Model):
 
     '''
-    
+    Intraveneous model child class that inherits from the Model parent class. Holds a specific rhs 
+    equation function that is different to the Subcutaneous model.
+
+    Args
+    ----
+    Model: (class) parent class to inherit from
     '''
 
     name = "subcutaneous"

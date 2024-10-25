@@ -1,0 +1,2 @@
+Using settings:
+ {'General': {'model': None, 'compartments': 2, 'rate': None, 'doseX': 1.0}, 'Protocol': {'times': range(1, 1000), 'scale': 0}, 'Output': {'visualise': True, 'verbose': True}, 'Parameters': {'V_c': 1.0, 'V_p1': 1.0, 'CL': 1.0, 'Q_p1': 1.0}}

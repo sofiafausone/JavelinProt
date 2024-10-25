@@ -55,9 +55,25 @@ class Config:
 
                     if line.startswith(" "):
                         name, value = line.split(":")
+                        name = name.strip()
                         if value in ("", " " "\t"):
                             value = None
-                        dict[section][name] = value.strip()
+
+                        if name in ("compartments", "scale"):
+                            value = int(value.strip())
+                        elif name in ("rate", "doseX", "V_c", "V_p1", "CL", "Q_p1"):
+                            value = float(value.strip())
+                        elif name in ("visualise", "verbose"):
+                            value = bool(value.strip())
+                        elif name == "times":
+                            if "," in value:
+                                value = list([int(x) for x in value.strip().split(",")])
+                            else:
+                                value = list(range(1, int(value.strip())))
+                        else:
+                            value = str(value.strip())
+
+                        dict[section][name] = value
                 
                     else:
                         section = line.strip().rstrip(":")

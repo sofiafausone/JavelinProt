@@ -1,22 +1,21 @@
 General:
- model: 		# (str) subcutaneous or intravenous
- compartments:          # (int) number of peripheral compartments
- rate:		    	# (float)(/h) the absorption rate constant (ka)
- doseX:			# (float)(mg) the dose quantity administered (X)
+ model: intravenous 	# (str) subcutaneous or intravenous
+ compartments: 2        # (int) number of peripheral compartments
+ rate: 1		# (float)(/h) the absorption rate constant (ka)
+ doseX:	1		# (float)(mg) the dose quantity administered (X)
 
 Protocol:
- dosing:	        # (float) total dosage administered
- times:			# (list) of administration times comma delimited
- scale:			# (0) specify the exponent to scale dosage by over time
+ times: 1000	        # (list or int) of administration times comma delimited
+ scale:	0		# (int: 0 or 1) specify the exponent to scale dosage by over time
 
 Output:
- visualise: 		# (bool) whether to visualise the output as a plot
- verbose:		# (bool) whether to stream outputs in verbose mode
+ visualise: True 	# (bool) whether to visualise the output as a plot
+ verbose: False		# (bool) whether to stream outputs in verbose mode
 
 Parameters:
- V_c:			# (float)(mL) volume of central compartment
- V_p1: 			# (float)(mL) volume of peripheral compartment 1
- CL:			# (float)(mL/h) clearance/elimination rate from central compartment
- Q_p1:			# (float)(mL/h) transition rate between central and peripheral 1
+ V_c: 1.0			# (float)(mL) volume of central compartment
+ V_p1: 1.0			# (float)(mL) volume of peripheral compartment 1
+ CL: 1.0			# (float)(mL/h) clearance/elimination rate from central compartment
+ Q_p1: 1.0			# (float)(mL/h) transition rate between central and peripheral 1
  
  
