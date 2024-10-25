@@ -10,6 +10,5 @@ from .version_info import VERSION_INT, VERSION  # noqa
 # Import main classes
 from .model import *
 from .protocol import *
-from .example import Solution     # noqa
 from .utils import *
 
