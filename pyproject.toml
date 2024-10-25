@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pkmodel"
+version = "0.1.0"
+description = "PK Model Project."
+readme = "README.md"
+license = {text = "MIT"}
+maintainers = [
+    {name = "Sofia Fausone", email = "sofiafausone@gmail.com"},
+    {name = "Kingsley Oguma", email = "kemukperuo@email.com"},
+    {name = "Hew Phipps", email = "hew.phipps@keble.ox.ac.uk"}
+]
+
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scipy",
+    "click"
+]
+
+[project.urls]
+homepage = "https://github.com/sofiafausone/JavelinProt"
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=1.5, !=1.7.3",
+    "sphinx_rtd_theme"
+]
+dev = [
+    "flake8>=3"
+]
+
+[tool.setuptools.packages.find]
+include = ["pkmodel"]
+exclude = ["runs"]
