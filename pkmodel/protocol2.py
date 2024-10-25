@@ -4,12 +4,14 @@ import matplotlib.pyplot as plt
 
 def run(**kwargs):
     
-    args = kwargs.get("settings")
-    if args in ({}, None, ""):
-        settings = {"General":None,"Protocol":None,"Output":None,"Parameters":None}
-        #settings = {}
-        for x in args:
+    _settings = kwargs.get("settings", None)
+    if _settings in ({}, None, ""):
+        settings = {"General":{},"Protocol":{},"Output":{},"Parameters":{}}
+
+        for x in kwargs:
+            print(x)
             if x in ("model", "compartments", "rate", "doseX"):
+                print(settings)
                 settings["General"][x] = args[x]
             elif x in ("times", "scale"):
                 settings["Protocol"][x] = args[x]
@@ -17,10 +19,9 @@ def run(**kwargs):
                 settings["Parameters"][x] = args[x]
             else:
                 raise Exception(f"Arg not in settings {args[x]}")
-
     else:
         settings = args
-
+    
     X = settings["General"]["doseX"]
 
     solve(X, settings)
@@ -28,10 +29,12 @@ def run(**kwargs):
 
 def solve(X, settings):
 
+    
+
     t_eval = np.linspace(0, 1, 1000)
     y0 = np.array([0.0, 0.0])
 
-    sub_bool = bool(settings["General"]["Model"])
+    sub_bool = bool(settings["General"]["model"])
 
     fig = plt.figure()
     if sub_bool == True:
@@ -64,4 +67,4 @@ args = {
     "Q_p1": 1.0
 }
 
-run(settings=args)
+run(**args)
